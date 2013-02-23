@@ -2,6 +2,9 @@ package com.bellumdeorum.website.controllers;
 
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,10 +27,10 @@ public class LoginController {
 	@Autowired
 	public LoginController(UserService userService) {
 		this.userService = userService;
-	}
-
+	}	
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public ModelAndView login(Locale locale, ModelMap model) {
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
 		return new ModelAndView("login_module", model);
 	}
 
@@ -37,7 +40,7 @@ public class LoginController {
 		User user = userService.getUser(email, password);
 		
 		if (user == null) {
-			return new ModelAndView("login_module", model);
+			return new ModelAndView("login", model);
 		}
 		
 		return new ModelAndView("home", model);

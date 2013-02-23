@@ -5,7 +5,7 @@
 <div class="login">
 	<form action="<c:url value="/login" />" method="POST">
 		<input type="text" name="email">
-		<input type="text" name="password">
+		<input type="password" name="password">
 		<input type="submit" value="Login">
 	</form>
 </div>
