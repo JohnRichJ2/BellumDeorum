@@ -19,4 +19,7 @@ public class UserService {
 		return userRepo.getUserByEmailAndPassword(email, password);
 	}
 	
+	public User getUser(long id) {
+		return userRepo.get(id);
+	}	
 }

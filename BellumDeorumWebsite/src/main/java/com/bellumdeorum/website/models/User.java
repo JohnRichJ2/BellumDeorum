@@ -1,17 +1,18 @@
 package com.bellumdeorum.website.models;
 
-public class User {
+public class User implements Model {
 	private long id;
 	private String name;
 	private String email;
 	private String password;
+	private Player player;
 	
-	public User(long id, String name, String email, String password) {
+	public User(long id, String name, String email, String password, Player player) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.name = "Hello";
+		this.player = player;
 	}
 
 	public long getId() {
@@ -44,5 +45,13 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 }

@@ -9,10 +9,14 @@ import com.bellumdeorum.website.models.User;
 
 @Component
 public class UserRepository extends GenericRepository<User> {
-	public UserRepository() { }
+	private final PlayerRepository playerRepo;
+	
+	public UserRepository() {
+		playerRepo = new PlayerRepository();
+	}
 	
 	public User getUserByEmailAndPassword(String email, String password) {
-		for (User user : getUsers()) {
+		for (User user : getModels()) {
 			if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) {
 				return user;
 			}
@@ -21,11 +25,11 @@ public class UserRepository extends GenericRepository<User> {
 		return null;
 	}
 	
-	private static final List<User> getUsers() {
-		User john = new User(1L, "john", "john@gmail.com", "pass");
-		User wolf = new User(2L, "wolf", "wolf@gmail.com", "pass");
-		User joe = new User(3L, "joe", "joe@gmail.com", "claudio");
-		User boph = new User(4L, "boph", "boph@gmail.com", "ilikepenis");
+	protected List<User> getModels() {
+		User john = new User(1L, "john", "john@gmail.com", "pass", playerRepo.get(1L));
+		User wolf = new User(2L, "wolf", "wolf@gmail.com", "pass", playerRepo.get(2L));
+		User joe = new User(3L, "joe", "joe@gmail.com", "claudio", playerRepo.get(3L));
+		User boph = new User(4L, "boph", "boph@gmail.com", "ilikepenis", playerRepo.get(4L));
 		
 		List<User> users = new ArrayList<User>();
 		users.add(john);
