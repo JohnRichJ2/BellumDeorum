@@ -3,25 +3,22 @@
 
 <html>
 <head>
-	<title>Home</title>
-	<script src="<c:url value="/resources/js/jquery-1.9.1.min.js" />"></script>
-	<script src="<c:url value="/resources/js/common.js" />"></script>
+	<title>Base</title>
+	<jsp:include page="common_head.jsp" />
 </head>
 <body>
+	<jsp:include page="common_header.jsp" />
 
-<h1>
-	Bellum Deorum  
-</h1>
-
-<h2>
-	Base <c:out value="${ player.name }" />
-</h2>
-
-<p>
-	Welcome, yo!
-</p>
+	<h2>
+		Base <c:out value="${ player.name }" />
+	</h2>
+	
+	<p>
+		Welcome, yo!
+	</p>
 
 
+	<jsp:include page="common_footer.jsp" />
 
 </body>
 </html>

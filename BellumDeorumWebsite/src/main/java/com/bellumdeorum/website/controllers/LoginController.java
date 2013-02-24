@@ -43,6 +43,6 @@ public class LoginController {
 			return new ModelAndView("login", model);
 		}
 		
-		return new ModelAndView("redirect:/player/1", model);
+		return new ModelAndView("redirect:/player/" + user.getPlayer().getId(), model);
 	}
 }
