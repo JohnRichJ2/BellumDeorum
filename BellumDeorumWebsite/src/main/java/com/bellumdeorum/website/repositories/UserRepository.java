@@ -6,14 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.website.models.User;
+import com.bellumdeorum.website.utils.Constants;
 
 @Component
 public class UserRepository extends GenericRepository<User> {
-	private final PlayerRepository playerRepo;
-	
-	public UserRepository() {
-		playerRepo = new PlayerRepository();
-	}
 	
 	public User getUserByEmailAndPassword(String email, String password) {
 		for (User user : getModels()) {
@@ -26,16 +22,11 @@ public class UserRepository extends GenericRepository<User> {
 	}
 	
 	protected List<User> getModels() {
-		User john = new User(1L, "john", "john@gmail.com", "pass", playerRepo.get(1L));
-		User wolf = new User(2L, "wolf", "wolf@gmail.com", "pass", playerRepo.get(2L));
-		User joe = new User(3L, "joe", "joe@gmail.com", "claudio", playerRepo.get(3L));
-		User boph = new User(4L, "boph", "boph@gmail.com", "ilikepenis", playerRepo.get(4L));
-		
 		List<User> users = new ArrayList<User>();
-		users.add(john);
-		users.add(wolf);
-		users.add(joe);
-		users.add(boph);
+		users.add(Constants.USER_JOHN);
+		users.add(Constants.USER_WOLF);
+		users.add(Constants.USER_JOE);
+		users.add(Constants.USER_BOPH);
 		
 		return users;
 	}

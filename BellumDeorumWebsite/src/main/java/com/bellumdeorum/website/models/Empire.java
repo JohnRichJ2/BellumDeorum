@@ -1,11 +1,13 @@
 package com.bellumdeorum.website.models;
 
-public class Player implements Model {
+public class Empire implements Model {
 	private long id;
+	private User user;
 	private String name;
 	
-	public Player(long id, String name) {
+	public Empire(long id, User user, String name) {
 		this.id = id;
+		this.user = user;
 		this.name = name;
 	}
 
@@ -17,6 +19,14 @@ public class Player implements Model {
 		this.id = id;
 	}
 
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -24,4 +34,5 @@ public class Player implements Model {
 	public void setName(String name) {
 		this.name = name;
 	}
+
 }

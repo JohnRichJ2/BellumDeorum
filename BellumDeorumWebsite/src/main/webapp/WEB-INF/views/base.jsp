@@ -10,7 +10,7 @@
 	<jsp:include page="common_header.jsp" />
 
 	<h2>
-		Base <c:out value="${ player.name }" />
+		Base <c:out value="${ empire.name }" />
 	</h2>
 	
 	<p>

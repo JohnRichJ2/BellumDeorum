@@ -13,28 +13,34 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.bellumdeorum.website.models.Empire;
 import com.bellumdeorum.website.models.User;
+import com.bellumdeorum.website.services.EmpireService;
 import com.bellumdeorum.website.services.UserService;
 
 @Controller
+@RequestMapping(value = "/login")
 public class LoginController {
 	private final UserService userService;
+	private final EmpireService empireService;
 	
 	protected LoginController() {
 		this.userService = null;
+		this.empireService = null;
 	}
 	
 	@Autowired
-	public LoginController(UserService userService) {
+	public LoginController(UserService userService, EmpireService empireService) {
 		this.userService = userService;
+		this.empireService = empireService;
 	}	
 	
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
 		return new ModelAndView("login_module", model);
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView login(Locale locale, ModelMap model,
 			@RequestParam("email") String email, @RequestParam("password") String password) {
 		User user = userService.getUser(email, password);
@@ -43,6 +49,8 @@ public class LoginController {
 			return new ModelAndView("login", model);
 		}
 		
-		return new ModelAndView("redirect:/player/" + user.getPlayer().getId(), model);
+		Empire empire = empireService.getEmpireByUserId(user.getId());
+		
+		return new ModelAndView("redirect:/empire/" + empire.getId(), model);
 	}
 }

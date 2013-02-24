@@ -5,14 +5,12 @@ public class User implements Model {
 	private String name;
 	private String email;
 	private String password;
-	private Player player;
 	
-	public User(long id, String name, String email, String password, Player player) {
+	public User(long id, String name, String email, String password) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.player = player;
 	}
 
 	public long getId() {
@@ -45,13 +43,5 @@ public class User implements Model {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Player getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(Player player) {
-		this.player = player;
 	}
 }
