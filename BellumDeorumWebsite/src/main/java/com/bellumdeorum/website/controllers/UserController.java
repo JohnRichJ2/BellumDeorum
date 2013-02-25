@@ -1,6 +1,5 @@
 package com.bellumdeorum.website.controllers;
 
-import java.io.File;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,45 +14,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bellumdeorum.website.models.Empire;
-import com.bellumdeorum.website.services.EmpireService;
+import com.bellumdeorum.website.models.User;
+import com.bellumdeorum.website.services.UserService;
 
 @Controller
-@RequestMapping(value = "/empire/{empireId}")
-public class EmpireController {
-	private final EmpireService empireService;
+@RequestMapping(value = "/user/{userId}")
+public class UserController {
+	private final UserService userService;
 	private final ObjectMapper mapper;
 	
-	protected EmpireController() {
-		this.empireService = null;
+	protected UserController() {
+		this.userService = null;
 		this.mapper = null;
 	}
 	
 	@Autowired
-	public EmpireController(EmpireService empireService, ObjectMapper mapper) {
-		this.empireService = empireService;
+	public UserController(UserService userService, ObjectMapper mapper) {
+		this.userService = userService;
 		this.mapper = mapper;
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
-			@PathVariable("empireId") long empireId) {
+			@PathVariable("userId") long userId) {
 		
-		Empire empire = empireService.getEmpire(empireId);
-		model.addAttribute("empire", empire);
-		
-		//empireService.createEmpire(empireId);
+		User user = userService.getUser(userId);
+		model.addAttribute("user", user);
 		
 		try {
-			model.addAttribute("jsonEmpire", mapper.writeValueAsString(empire));
-			//File file = new File("./empire.json");
-			//model.addAttribute("jsonEmpire", file.getAbsolutePath());
-			//mapper.writeValue(new File("./empire.json"), empire);
+			model.addAttribute("jsonUser", mapper.writeValueAsString(user));
 		} catch(Exception e) {
 			model.addAttribute("jsonEmpire", "yeah, yeah, yeah" + e);
 		}
 				
-		return new ModelAndView("base", model);
+		return new ModelAndView("user", model);
 	}
-
 }

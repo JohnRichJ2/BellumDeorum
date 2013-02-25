@@ -15,6 +15,10 @@ public class EmpireService {
 		this.empireRepo = empireRepo;
 	}
 	
+	public Empire createEmpire(long id) {
+		return empireRepo.save(empireRepo.get(id));
+	}
+	
 	public Empire getEmpire(long id) {
 		return empireRepo.get(id);
 	}

@@ -1,10 +1,12 @@
 package com.bellumdeorum.website.models;
 
 public class User implements Model {
-	private long id;
+	private Long id;
 	private String name;
 	private String email;
 	private String password;
+	
+	public User() { }
 	
 	public User(long id, String name, String email, String password) {
 		this.id = id;
@@ -13,7 +15,7 @@ public class User implements Model {
 		this.password = password;
 	}
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

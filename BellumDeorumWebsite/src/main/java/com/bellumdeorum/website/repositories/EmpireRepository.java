@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.website.models.Empire;
-import com.bellumdeorum.website.utils.Constants;
 
 @Component
 public class EmpireRepository extends GenericRepository<Empire> {
@@ -21,13 +20,14 @@ public class EmpireRepository extends GenericRepository<Empire> {
 		return null;
 	}
 	
+	public Class<Empire> tClass() { return Empire.class; }
 	
 	protected List<Empire> getModels() {
 		List<Empire> empires = new ArrayList<Empire>();
-		empires.add(Constants.EMPIRE_JOHN);
-		empires.add(Constants.EMPIRE_WOLF);
-		empires.add(Constants.EMPIRE_JOE);
-		empires.add(Constants.EMPIRE_BOPH);
+		empires.add(get(100L));
+		empires.add(get(101L));
+		empires.add(get(102L));
+		empires.add(get(103L));
 
 		return empires;
 	}

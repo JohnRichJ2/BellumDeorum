@@ -15,6 +15,10 @@ public class UserService {
 		this.userRepo = userRepo;
 	}
 	
+	public User createUser(long id) {
+		return userRepo.save(userRepo.get(id));
+	}
+	
 	public User getUser(String email, String password) {
 		return userRepo.getUserByEmailAndPassword(email, password);
 	}

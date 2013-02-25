@@ -1,5 +1,6 @@
 package com.bellumdeorum.website.models;
 
 public interface Model {
-	public long getId();
+	public Long getId();
+	public void setId(long id);
 }

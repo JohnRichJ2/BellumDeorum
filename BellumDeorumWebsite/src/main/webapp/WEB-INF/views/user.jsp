@@ -3,14 +3,14 @@
 
 <html>
 <head>
-	<title>Base</title>
+	<title>User</title>
 	<jsp:include page="common_head.jsp" />
 </head>
 <body>
 	<jsp:include page="common_header.jsp" />
 
 	<h2>
-		Base <c:out value="${ empire.name }" />
+		Base <c:out value="${ user.name }" />
 	</h2>
 	
 	<p>
@@ -18,7 +18,7 @@
 	</p>
 	
 	<p>
-		Base <c:out value="${ jsonEmpire }" />
+		Base <c:out value="${ jsonUser }" />
 	</p>
 
 

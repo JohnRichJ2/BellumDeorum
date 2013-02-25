@@ -23,6 +23,10 @@
 	
 	<context:component-scan base-package="com.bellumdeorum.website" />
 	
+	<!-- Enables JacksonObjectMapper -->
+	<beans:bean class="org.codehaus.jackson.map.ObjectMapper">
+	
+	</beans:bean>
 	
 	
 </beans:beans>
