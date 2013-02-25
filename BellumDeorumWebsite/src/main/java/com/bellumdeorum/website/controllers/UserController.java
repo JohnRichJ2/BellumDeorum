@@ -38,7 +38,7 @@ public class UserController {
 	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("userId") long userId) {
 		
-		User user = userService.getUser(userId);
+		User user = userService.createUser(userId);
 		model.addAttribute("user", user);
 		
 		try {

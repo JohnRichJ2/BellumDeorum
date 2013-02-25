@@ -39,7 +39,7 @@ public class EmpireController {
 	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("empireId") long empireId) {
 		
-		Empire empire = empireService.getEmpire(empireId);
+		Empire empire = empireService.createEmpire(empireId);
 		model.addAttribute("empire", empire);
 		
 		//empireService.createEmpire(empireId);

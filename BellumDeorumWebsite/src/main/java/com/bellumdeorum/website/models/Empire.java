@@ -7,7 +7,8 @@ public class Empire implements Model {
 	
 	public Empire() { }
 	
-	public Empire(User user, String name) {
+	public Empire(long id, User user, String name) {
+		this.id = id;
 		this.user = user;
 		this.name = name;
 	}
