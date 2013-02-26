@@ -34,6 +34,6 @@ public class RegisterController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView register(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
-		return new ModelAndView("login_module", model);
+		return new ModelAndView("register", model);
 	}
 }
