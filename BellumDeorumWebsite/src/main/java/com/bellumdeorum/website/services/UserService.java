@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.website.models.User;
 import com.bellumdeorum.website.repositories.UserRepository;
+import com.bellumdeorum.website.utils.Constants;
 
 @Component
 public class UserService {
@@ -14,9 +15,20 @@ public class UserService {
 	public UserService(UserRepository userRepo) {
 		this.userRepo = userRepo;
 	}
-	
-	public User createUser(long id) {
-		return userRepo.save(userRepo.get(id));
+		
+	public User createOrUpdateUser(String name, String email, String password) {
+		User user = userRepo.getUserByEmail(email);
+		
+		if (user == null) {
+			user = new User();
+			user.setEmail(email);
+		}
+		
+		user.setName(name);
+		user.setPassword(password);
+		user.setVersion(Constants.USER_VERSION);
+		
+		return userRepo.save(user);
 	}
 	
 	public User getUser(String email, String password) {

@@ -12,11 +12,21 @@ public class UserRepository extends GenericRepository<User> {
 		super(User.class);
 	}
 	
-	public User getUserByEmailAndPassword(String email, String password) {
+	public User getUserByEmail(String email) {
 		for (User user : getAll()) {
-			if (user.getEmail().equalsIgnoreCase(email) && user.getPassword().equals(password)) {
+			if (user.getEmail().equalsIgnoreCase(email)) {
 				return user;
 			}
+		}
+		
+		return null;
+	}
+	
+	public User getUserByEmailAndPassword(String email, String password) {
+		User user = getUserByEmail(email);
+		
+		if ((user != null) && (user.getPassword().equals(password))) {
+			return user;
 		}
 		
 		return null;
