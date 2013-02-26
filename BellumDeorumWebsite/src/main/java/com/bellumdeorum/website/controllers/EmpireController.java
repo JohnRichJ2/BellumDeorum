@@ -1,6 +1,5 @@
 package com.bellumdeorum.website.controllers;
 
-import java.io.File;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,16 +38,11 @@ public class EmpireController {
 	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("empireId") long empireId) {
 		
-		Empire empire = empireService.createEmpire(empireId);
+		Empire empire = empireService.getEmpire(empireId);
 		model.addAttribute("empire", empire);
-		
-		//empireService.createEmpire(empireId);
 		
 		try {
 			model.addAttribute("jsonEmpire", mapper.writeValueAsString(empire));
-			//File file = new File("./empire.json");
-			//model.addAttribute("jsonEmpire", file.getAbsolutePath());
-			//mapper.writeValue(new File("./empire.json"), empire);
 		} catch(Exception e) {
 			model.addAttribute("jsonEmpire", "yeah, yeah, yeah" + e);
 		}

@@ -1,32 +1,41 @@
 package com.bellumdeorum.website.models;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class Empire implements Model {
 	private Long id;
-	private User user;
+	private Long version;
+	
+	private Long userId;
 	private String name;
+
+	@JsonIgnore
+	private User user;
 	
 	public Empire() { }
-	
-	public Empire(long id, User user, String name) {
-		this.id = id;
-		this.user = user;
-		this.name = name;
-	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public User getUser() {
-		return user;
+	public Long getVersion() {
+		return version;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setVersion(Long version) {
+		this.version = version;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
@@ -35,5 +44,14 @@ public class Empire implements Model {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		setUserId(user.getId());
+		this.user = user;
 	}
 }

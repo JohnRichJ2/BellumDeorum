@@ -2,25 +2,28 @@ package com.bellumdeorum.website.models;
 
 public class User implements Model {
 	private Long id;
+	private Long version;
+	
 	private String name;
 	private String email;
 	private String password;
 	
 	public User() { }
-	
-	public User(long id, String name, String email, String password) {
-		this.id = id;
-		this.name = name;
-		this.email = email;
-		this.password = password;
-	}
 
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Long getVersion() {
+		return version;
+	}
+
+	public void setVersion(Long version) {
+		this.version = version;
 	}
 
 	public String getName() {
@@ -46,4 +49,5 @@ public class User implements Model {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
 }

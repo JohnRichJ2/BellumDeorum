@@ -1,80 +1,62 @@
 package com.bellumdeorum.website.repositories;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.website.models.Model;
+import com.bellumdeorum.website.utils.Constants;
+import com.bellumdeorum.website.utils.FileUtil;
 
 @Component
 public abstract class GenericRepository<T extends Model> {
-	private static final Logger logger = LoggerFactory.getLogger(GenericRepository.class);
 	private static final ObjectMapper mapper = new ObjectMapper();
 	
-	public abstract Class<T> tClass();
-			
-	public String getPath(String className, long id) {
-		return String.format("./simpledb/bellumdeorum/%s/%d.json", className.toLowerCase(), id);
-	}
+	private final Class<T> modelClass;
 	
-	public String getPath(T model) {
-		return getPath(model.getClass().getSimpleName(), model.getId());
-	}
-	
-	public T getNextAvailableId(T model) {
-		long id = 100L;
-		do {
-			model.setId(++id);
-
-			if (!(new File(getPath(model)).exists()) && createNewFile(model)) {
-				return model;
-			}
-		} while(true);
-	}
-	
-	public boolean createNewFile(T model) {
-		File file = new File(getPath(model));
-		try {
-			logger.debug(String.format("Creating new file... %s", file));
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-		} catch (IOException e) {
-			logger.error("Error creating new file..." + file.getAbsolutePath(), e);
-			return false;
-		}
-		
-		return true;
+	public GenericRepository(Class<T> modelClass) {
+		this.modelClass = modelClass;
 	}
 		
 	public T save(T model) {
 		if (model.getId() == null) {
-			model = getNextAvailableId(model);
+			model.setId(FileUtil.getInstance().getNextAvailableId(modelClass.getSimpleName()));
+		}
+
+		try {
+			mapper.writeValue(FileUtil.getInstance().getFile(modelClass.getSimpleName(), model.getId()), model);
+		} catch (JsonGenerationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
-		try {
-			mapper.writeValue(new File(getPath(model)), model);
-		} catch (FileNotFoundException e) {
-			// THIS ONLY EXISTS FOR OBJECTS I CREATED BEFORE USING THE JSON SAVE
-			if (createNewFile(model)) {
-				this.save(model);
-			}
-		} catch (Exception e) {
-			System.out.println(e);
-		}
 		return model;
 	}
 	
-	public T get(long id) {
+	public List<T> save(List<T> modelList) {
+		for (T model : modelList) {
+			save(model);
+		}
+		
+		return modelList;
+	}
+	
+	public T get(long id) {		
 		T model = null;
 		try {
-			model = (T) mapper.readValue(new File(getPath(tClass().getSimpleName(), id)), tClass());
+			model = (T) mapper.readValue(FileUtil.getInstance().getFile(modelClass.getSimpleName(), id), modelClass);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,7 +67,35 @@ public abstract class GenericRepository<T extends Model> {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		// THESE LINES ONLY PUT IN SINCE THE MODELS CHANGE 'FREQUENTLY' AND ARE NOT IN GIT
+		if ((model == null) || (model.getVersion() == null) || (model.getVersion() < Constants.getVersion(modelClass))) {
+			@SuppressWarnings("unchecked")
+			List<T> modelList = Constants.getModels(modelClass);
+			for (T t : modelList) {
+				if (t.getId() == id) {
+					save(modelList);
+				}
+			}
+		}
 		
 		return model;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<T> getAll() {
+		List<T> modelList = new ArrayList<T>();
+		
+		for (Long id : FileUtil.getInstance().getPaths(modelClass.getSimpleName()).keySet()) {
+			modelList.add(get(id));
+		}
+		
+		// THESE LINES ONLY PUT IN SINCE THE MODELS CHANGE 'FREQUENTLY' AND ARE NOT IN GIT, COULD CAUSE INFINITE LOOP
+		if (modelList.size() == 0) {
+			save(Constants.getModels(modelClass));
+			return getAll();
+		}
+		
+		return modelList;
 	}
 }
