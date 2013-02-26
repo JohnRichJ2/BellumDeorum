@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bellumdeorum.website.services.EmpireService;
@@ -35,5 +36,14 @@ public class RegisterController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView register(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
 		return new ModelAndView("register", model);
+	}
+
+	@RequestMapping(value = "/new", method = RequestMethod.POST)
+	public ModelAndView newRegistration(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
+			@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String password) {
+		
+		userService.createOrUpdateUser(name, email, password);
+		
+		return new ModelAndView("redirect:/", model);
 	}
 }

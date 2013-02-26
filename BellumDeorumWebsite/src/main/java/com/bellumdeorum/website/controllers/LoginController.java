@@ -49,7 +49,7 @@ public class LoginController {
 			return new ModelAndView("login", model);
 		}
 		
-		Empire empire = empireService.getEmpireByUserId(user.getId());
+		Empire empire = empireService.getOrCreateEmpireByUserId(user.getId());
 		
 		return new ModelAndView("redirect:/empire/" + empire.getId(), model);
 	}

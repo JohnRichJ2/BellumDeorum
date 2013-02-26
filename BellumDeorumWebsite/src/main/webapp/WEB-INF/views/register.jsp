@@ -14,10 +14,10 @@
 	</p>
 		
 	<div class="login">
-		<form action="<c:url value="/register" />" method="POST">
+		<form action="<c:url value="/register/new" />" method="POST">
 			<input class="defaultableTextInput" default="name" type="text" name="name">
 			<input class="defaultableTextInput" default="email" type="text" name="email">
-			<input type="password" name="password">
+			<input class="defaultableTextInput" default="password" type="text" name="password">
 			<input type="submit" value="Register">
 		</form>
 	</div>
