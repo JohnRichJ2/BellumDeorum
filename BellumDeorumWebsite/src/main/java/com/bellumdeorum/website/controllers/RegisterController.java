@@ -58,7 +58,8 @@ public class RegisterController {
 			@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String password) {
 		
 		Registration registration = registrationService.createOrUpdateRegistraion(name, email, password);
+		SessionUtil.getInstance().logUserIn(registration.getUser());
 		
-		return new ModelAndView("redirect:/?token=" + registration.getToken(), model);
+		return new ModelAndView("redirect:/user?token=" + registration.getToken(), model);
 	}
 }
