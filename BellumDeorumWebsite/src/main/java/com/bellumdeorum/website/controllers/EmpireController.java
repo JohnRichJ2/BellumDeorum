@@ -16,9 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bellumdeorum.website.models.Empire;
 import com.bellumdeorum.website.services.EmpireService;
+import com.bellumdeorum.website.utils.SessionUtil;
 
 @Controller
-@RequestMapping(value = "/empire/{empireId}")
+@RequestMapping(value = "/empire")
 public class EmpireController {
 	private final EmpireService empireService;
 	private final ObjectMapper mapper;
@@ -33,8 +34,28 @@ public class EmpireController {
 		this.empireService = empireService;
 		this.mapper = mapper;
 	}
-
+	
 	@RequestMapping(method = RequestMethod.GET)
+	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
+		Long userId = SessionUtil.getInstance().getUserId();
+		
+		if (userId == null) {
+			return new ModelAndView("redirect:/", model);
+		}	
+		
+		Empire empire = empireService.getOrCreateEmpireByUserId(userId);
+		model.addAttribute("empire", empire);
+		
+		try {
+			model.addAttribute("jsonEmpire", mapper.writeValueAsString(empire));
+		} catch(Exception e) {
+			model.addAttribute("jsonEmpire", "yeah, yeah, yeah" + e);
+		}
+				
+		return new ModelAndView("base", model);
+	}
+
+	@RequestMapping(value = "/{empireId}", method = RequestMethod.GET)
 	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("empireId") long empireId) {
 		

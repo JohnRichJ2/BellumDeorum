@@ -16,9 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bellumdeorum.website.models.User;
 import com.bellumdeorum.website.services.UserService;
+import com.bellumdeorum.website.utils.SessionUtil;
 
 @Controller
-@RequestMapping(value = "/user/{userId}")
+@RequestMapping(value = "/user")
 public class UserController {
 	private final UserService userService;
 	private final ObjectMapper mapper;
@@ -35,8 +36,12 @@ public class UserController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
-			@PathVariable("userId") long userId) {
+	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
+		Long userId = SessionUtil.getInstance().getUserId();
+		
+		if (userId == null) {
+			return new ModelAndView("redirect:/", model);
+		}
 		
 		User user = userService.getUser(userId);
 		model.addAttribute("user", user);

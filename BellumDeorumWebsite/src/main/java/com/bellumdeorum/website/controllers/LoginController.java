@@ -17,6 +17,7 @@ import com.bellumdeorum.website.models.Empire;
 import com.bellumdeorum.website.models.User;
 import com.bellumdeorum.website.services.EmpireService;
 import com.bellumdeorum.website.services.UserService;
+import com.bellumdeorum.website.utils.SessionUtil;
 
 @Controller
 @RequestMapping(value = "/login")
@@ -48,6 +49,8 @@ public class LoginController {
 		if (user == null) {
 			return new ModelAndView("login", model);
 		}
+		
+		SessionUtil.getInstance().logUserIn(user);
 		
 		Empire empire = empireService.getOrCreateEmpireByUserId(user.getId());
 		

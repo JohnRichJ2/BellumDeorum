@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bellumdeorum.website.models.Registration;
 import com.bellumdeorum.website.services.RegistrationService;
+import com.bellumdeorum.website.utils.SessionUtil;
 
 @Controller
 @RequestMapping(value = "/register")
@@ -38,10 +39,15 @@ public class RegisterController {
 	
 	@RequestMapping(value = "/{token}", method = RequestMethod.GET)
 	public ModelAndView register(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
-			@PathVariable("token") String token, @RequestParam("userId") long userId) {
+			@PathVariable("token") String token) {
+		Long userId = SessionUtil.getInstance().getUserId();
+		
+		if (userId == null) {
+			return new ModelAndView("redirect:/", model);
+		}	
 
 		if (registrationService.registerUser(userId, token)) {
-			return new ModelAndView("redirect:/user/" + userId, model);
+			return new ModelAndView("redirect:/user", model);
 		} else {
 			return new ModelAndView("redirect:/", model);
 		}

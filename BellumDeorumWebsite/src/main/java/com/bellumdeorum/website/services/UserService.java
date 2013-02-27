@@ -26,7 +26,6 @@ public class UserService {
 			user.setStatus(UserStatus.UNREGISTERED);
 			user.setName(name);
 			user.setPassword(password);
-			user.setStatus(status);
 		} else {
 			if (name != null) {
 				user.setName(name);
