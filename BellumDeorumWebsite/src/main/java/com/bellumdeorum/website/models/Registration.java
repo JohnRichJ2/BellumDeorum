@@ -1,17 +1,24 @@
 package com.bellumdeorum.website.models;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.joda.time.DateTime;
 
-public class Empire implements Model {
+public class Registration implements Model {
+	public enum RegistrationStatus {
+		SENT, USED, CANCELLED, EXPIRED
+	}
+	
 	private Long id;
 	private Long version;
 	
 	private Long userId;
-	private String name;
-
+	private String token;
+	private RegistrationStatus status;
+	private DateTime expirationDate;
+	
 	@JsonIgnore
 	private User user;
-	
+
 	public Long getId() {
 		return id;
 	}
@@ -36,12 +43,28 @@ public class Empire implements Model {
 		this.userId = userId;
 	}
 
-	public String getName() {
-		return name;
+	public String getToken() {
+		return token;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public RegistrationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(RegistrationStatus status) {
+		this.status = status;
+	}
+
+	public DateTime getExpirationDate() {
+		return expirationDate;
+	}
+
+	public void setExpirationDate(DateTime expirationDate) {
+		this.expirationDate = expirationDate;
 	}
 
 	public User getUser() {
@@ -52,4 +75,5 @@ public class Empire implements Model {
 		setUserId(user.getId());
 		this.user = user;
 	}
+
 }

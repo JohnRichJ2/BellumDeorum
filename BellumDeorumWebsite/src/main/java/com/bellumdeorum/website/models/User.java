@@ -1,15 +1,18 @@
 package com.bellumdeorum.website.models;
 
 public class User implements Model {
+	public enum UserStatus {
+		NEW, VALIDATED, BANNED
+	}
+	
 	private Long id;
 	private Long version;
 	
 	private String name;
 	private String email;
 	private String password;
+	private UserStatus status;
 	
-	public User() { }
-
 	public Long getId() {
 		return id;
 	}
@@ -48,6 +51,14 @@ public class User implements Model {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public UserStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(UserStatus status) {
+		this.status = status;
 	}
 	
 }

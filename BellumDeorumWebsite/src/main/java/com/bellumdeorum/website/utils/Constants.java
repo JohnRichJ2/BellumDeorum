@@ -10,7 +10,7 @@ import com.bellumdeorum.website.models.Empire;
 import com.bellumdeorum.website.models.User;
 
 public class Constants {
-	public static final Long USER_VERSION = 1L;
+	public static final Long USER_VERSION = 2L;
 	public static final Long EMPIRE_VERSION = 1L;
 	
 	public static final User USER_JOHN = new User() {
@@ -20,6 +20,7 @@ public class Constants {
 			setName("john");
 			setEmail("john@gmail.com");
 			setPassword("pass");
+			setStatus(UserStatus.VALIDATED);
 		}
 	};
 	public static final User USER_WOLF = new User() {
@@ -29,6 +30,7 @@ public class Constants {
 			setName("wolf");
 			setEmail("wolf@gmail.com");
 			setPassword("pass");
+			setStatus(UserStatus.VALIDATED);
 		}
 	};
 	public static final User USER_JOE = new User() {
@@ -38,6 +40,7 @@ public class Constants {
 			setName("joe");
 			setEmail("joe@gmail.com");
 			setPassword("pass");
+			setStatus(UserStatus.VALIDATED);
 		}
 	};
 	public static final User USER_BOPH = new User() {
@@ -47,6 +50,7 @@ public class Constants {
 			setName("boph");
 			setEmail("boph@gmail.com");
 			setPassword("pass");
+			setStatus(UserStatus.BANNED);
 		}
 	};
 	@SuppressWarnings("serial")
