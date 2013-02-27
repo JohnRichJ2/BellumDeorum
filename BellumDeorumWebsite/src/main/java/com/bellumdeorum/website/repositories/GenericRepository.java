@@ -92,8 +92,10 @@ public abstract class GenericRepository<T extends Model> {
 		
 		// THESE LINES ONLY PUT IN SINCE THE MODELS CHANGE 'FREQUENTLY' AND ARE NOT IN GIT, COULD CAUSE INFINITE LOOP
 		if (modelList.size() == 0) {
-			save(Constants.getModels(modelClass));
-			return getAll();
+			if (Constants.getModels(modelClass) != null) {
+				save(Constants.getModels(modelClass));
+				return getAll();
+			}
 		}
 		
 		return modelList;

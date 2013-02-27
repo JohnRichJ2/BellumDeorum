@@ -3,15 +3,18 @@ package com.bellumdeorum.website.repositories;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.bellumdeorum.website.models.Registration;
 import com.bellumdeorum.website.models.Registration.RegistrationStatus;
 
+@Component
 public class RegistrationRepository extends GenericRepository<Registration> {
 	public RegistrationRepository() {
 		super(Registration.class);
 	}
 	
-	public Registration getSentRegistraionForUser(long userId) {
+	public Registration getSentRegistrationForUser(long userId) {
 		List<Registration> registrationList = getRegistrationListForUserByStatus(userId, RegistrationStatus.SENT);
 		
 		if (registrationList.size() == 0) {

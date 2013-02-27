@@ -2,7 +2,7 @@ package com.bellumdeorum.website.models;
 
 public class User implements Model {
 	public enum UserStatus {
-		NEW, VALIDATED, BANNED
+		UNREGISTERED, REGISTERED, BANNED
 	}
 	
 	private Long id;

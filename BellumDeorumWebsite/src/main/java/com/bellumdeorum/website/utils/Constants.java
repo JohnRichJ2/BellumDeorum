@@ -7,11 +7,13 @@ import java.util.Map;
 
 import com.bellumdeorum.website.models.Model;
 import com.bellumdeorum.website.models.Empire;
+import com.bellumdeorum.website.models.Registration;
 import com.bellumdeorum.website.models.User;
 
 public class Constants {
 	public static final Long USER_VERSION = 2L;
 	public static final Long EMPIRE_VERSION = 1L;
+	public static final Long REGISTRATION_VERSION = 1L;
 	
 	public static final User USER_JOHN = new User() {
 		{
@@ -20,7 +22,7 @@ public class Constants {
 			setName("john");
 			setEmail("john@gmail.com");
 			setPassword("pass");
-			setStatus(UserStatus.VALIDATED);
+			setStatus(UserStatus.REGISTERED);
 		}
 	};
 	public static final User USER_WOLF = new User() {
@@ -30,7 +32,7 @@ public class Constants {
 			setName("wolf");
 			setEmail("wolf@gmail.com");
 			setPassword("pass");
-			setStatus(UserStatus.VALIDATED);
+			setStatus(UserStatus.REGISTERED);
 		}
 	};
 	public static final User USER_JOE = new User() {
@@ -40,7 +42,7 @@ public class Constants {
 			setName("joe");
 			setEmail("joe@gmail.com");
 			setPassword("pass");
-			setStatus(UserStatus.VALIDATED);
+			setStatus(UserStatus.REGISTERED);
 		}
 	};
 	public static final User USER_BOPH = new User() {
@@ -109,6 +111,7 @@ public class Constants {
 		Map<String, Long> map = new HashMap<String, Long>();
 		map.put(User.class.getSimpleName(), USER_VERSION);
 		map.put(Empire.class.getSimpleName(), EMPIRE_VERSION);
+		map.put(Registration.class.getSimpleName(), REGISTRATION_VERSION);
 		return map.get(modelClass.getSimpleName());
 	}
 	
@@ -117,6 +120,7 @@ public class Constants {
 		Map<String, List> map = new HashMap<String, List>();
 		map.put(User.class.getSimpleName(), USER_LIST);
 		map.put(Empire.class.getSimpleName(), EMPIRE_LIST);
+		map.put(Registration.class.getSimpleName(), null);
 		return map.get(modelClass.getSimpleName());
 	}
 }

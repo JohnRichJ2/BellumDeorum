@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.website.models.User;
+import com.bellumdeorum.website.models.User.UserStatus;
 import com.bellumdeorum.website.repositories.UserRepository;
 import com.bellumdeorum.website.utils.Constants;
 
@@ -15,17 +16,31 @@ public class UserService {
 	public UserService(UserRepository userRepo) {
 		this.userRepo = userRepo;
 	}
-		
-	public User createOrUpdateUser(String name, String email, String password) {
+			
+	public User createOrUpdateUser(String name, String email, String password, UserStatus status) {
 		User user = userRepo.getUserByEmail(email);
 		
 		if (user == null) {
 			user = new User();
 			user.setEmail(email);
+			user.setStatus(UserStatus.UNREGISTERED);
+			user.setName(name);
+			user.setPassword(password);
+			user.setStatus(status);
+		} else {
+			if (name != null) {
+				user.setName(name);
+			}
+			
+			if (password != null) {
+				user.setPassword(password);
+			}
+			
+			if (status != null) {
+				user.setStatus(status);
+			}
 		}
-		
-		user.setName(name);
-		user.setPassword(password);
+
 		user.setVersion(Constants.USER_VERSION);
 		
 		return userRepo.save(user);
