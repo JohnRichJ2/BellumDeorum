@@ -3,6 +3,7 @@
 	<name>UserService</name>
 	<comment></comment>
 	<projects>
+		<project>UserServiceModel</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
