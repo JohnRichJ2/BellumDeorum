@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bellumdeorum.userservice.*;
-
 import com.bellumdeorum.website.models.Empire;
 import com.bellumdeorum.website.services.EmpireService;
 import com.bellumdeorum.website.utils.SessionUtil;
