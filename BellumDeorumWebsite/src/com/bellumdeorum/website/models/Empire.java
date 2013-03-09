@@ -2,7 +2,9 @@ package com.bellumdeorum.website.models;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-public class Empire implements Model {
+import com.bellumdeorum.shared.model.AbstractModel;
+
+public class Empire implements AbstractModel {
 	private Long id;
 	private Long version;
 	

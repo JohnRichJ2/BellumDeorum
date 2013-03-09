@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.bellumdeorum.website.models.Model;
+import com.bellumdeorum.shared.model.AbstractModel;
 import com.bellumdeorum.website.models.Empire;
 import com.bellumdeorum.website.models.Registration;
 import com.bellumdeorum.website.models.User;
@@ -107,7 +107,7 @@ public class Constants {
 		}
 	};
 	
-	public static <T extends Model> long getVersion(Class<T> modelClass) {
+	public static <T extends AbstractModel> long getVersion(Class<T> modelClass) {
 		Map<String, Long> map = new HashMap<String, Long>();
 		map.put(User.class.getSimpleName(), USER_VERSION);
 		map.put(Empire.class.getSimpleName(), EMPIRE_VERSION);
@@ -116,7 +116,7 @@ public class Constants {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public static <T extends Model> List getModels(Class<T> modelClass) {
+	public static <T extends AbstractModel> List getModels(Class<T> modelClass) {
 		Map<String, List> map = new HashMap<String, List>();
 		map.put(User.class.getSimpleName(), USER_LIST);
 		map.put(Empire.class.getSimpleName(), EMPIRE_LIST);

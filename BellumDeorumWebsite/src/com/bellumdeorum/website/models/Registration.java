@@ -3,7 +3,9 @@ package com.bellumdeorum.website.models;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
 
-public class Registration implements Model {
+import com.bellumdeorum.shared.model.AbstractModel;
+
+public class Registration implements AbstractModel {
 	public enum RegistrationStatus {
 		SENT, USED, CANCELLED, EXPIRED
 	}

@@ -1,6 +1,8 @@
 package com.bellumdeorum.website.models;
 
-public class User implements Model {
+import com.bellumdeorum.shared.model.AbstractModel;
+
+public class User implements AbstractModel {
 	public enum UserStatus {
 		UNREGISTERED, REGISTERED, BANNED
 	}

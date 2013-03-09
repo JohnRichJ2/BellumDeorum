@@ -5,11 +5,12 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.bellumdeorum.shared.repository.AbstractRepository;
 import com.bellumdeorum.website.models.Registration;
 import com.bellumdeorum.website.models.Registration.RegistrationStatus;
 
 @Component
-public class RegistrationRepository extends GenericRepository<Registration> {
+public class RegistrationRepository extends AbstractRepository<Registration> {
 	public RegistrationRepository() {
 		super(Registration.class);
 	}
@@ -41,7 +42,7 @@ public class RegistrationRepository extends GenericRepository<Registration> {
 	public List<Registration> getRegistrationListForUser(long userId) {
 		List<Registration> registrationList = new ArrayList<Registration>();
 		
-		for (Registration registration : getAll()) {
+		for (Registration registration : get()) {
 			if (registration.getUserId() == userId) {
 				registrationList.add(registration);
 			}

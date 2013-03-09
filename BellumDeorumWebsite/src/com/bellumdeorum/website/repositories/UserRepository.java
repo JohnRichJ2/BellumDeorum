@@ -3,17 +3,19 @@ package com.bellumdeorum.website.repositories;
 
 import org.springframework.stereotype.Component;
 
+import com.bellumdeorum.shared.repository.AbstractRepository;
 import com.bellumdeorum.website.models.User;
+import com.bellumdeorum.website.utils.Constants;
 
 @Component
-public class UserRepository extends GenericRepository<User> {
+public class UserRepository extends AbstractRepository<User> {
 		
 	public UserRepository() {
-		super(User.class);
+		super(User.class, Constants.getModels(User.class));
 	}
 	
 	public User getUserByEmail(String email) {
-		for (User user : getAll()) {
+		for (User user : get()) {
 			if (user.getEmail().equalsIgnoreCase(email)) {
 				return user;
 			}
