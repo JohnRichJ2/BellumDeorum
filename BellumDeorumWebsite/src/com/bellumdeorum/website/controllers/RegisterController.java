@@ -40,7 +40,7 @@ public class RegisterController {
 	@RequestMapping(value = "/{token}", method = RequestMethod.GET)
 	public ModelAndView register(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("token") String token) {
-		Long userId = SessionUtil.getInstance().getUserId();
+		Long userId = SessionUtil.getInstance().getUserId(request.getRemoteAddr());
 		
 		if (userId == null) {
 			return new ModelAndView("redirect:/", model);
@@ -58,7 +58,7 @@ public class RegisterController {
 			@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String password) {
 		
 		Registration registration = registrationService.createOrUpdateRegistraion(name, email, password);
-		SessionUtil.getInstance().logUserIn(registration.getUser());
+		SessionUtil.getInstance().logUserIn(request.getRemoteAddr(), registration.getUser());
 		
 		return new ModelAndView("redirect:/user?token=" + registration.getToken(), model);
 	}

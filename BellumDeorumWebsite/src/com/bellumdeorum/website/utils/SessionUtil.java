@@ -2,8 +2,11 @@ package com.bellumdeorum.website.utils;
 
 import com.bellumdeorum.website.models.User;
 
+import com.bellumdeorum.shared.managers.SessionManager;
+
 public class SessionUtil {
 	private static SessionUtil instance = new SessionUtil();
+	private static SessionManager session = SessionManager.getInstance();
 	
 	private SessionUtil() { }
 	
@@ -11,17 +14,15 @@ public class SessionUtil {
 		return instance;
 	}
 	
-	private static Long userId;
-	
-	public void logUserIn(User user) {
-		userId = user.getId();
+	public void logUserIn(String ip, User user) {
+		session.put(ip, "USER_ID", user.getId());
 	}
 	
-	public void logUserOut() {
-		userId = null;
+	public void logUserOut(String ip) {
+		session.put(ip, "USER_ID", null);
 	}
 	
-	public Long getUserId() {
-		return userId;
+	public Long getUserId(String ip) {
+		return session.get(ip, "USER_ID");
 	}
 }

@@ -42,7 +42,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView login(Locale locale, ModelMap model,
+	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@RequestParam("email") String email, @RequestParam("password") String password) {
 		User user = userService.getUser(email, password);
 		
@@ -50,7 +50,7 @@ public class LoginController {
 			return new ModelAndView("login", model);
 		}
 		
-		SessionUtil.getInstance().logUserIn(user);
+		SessionUtil.getInstance().logUserIn(request.getRemoteAddr(), user);
 		
 		Empire empire = empireService.getOrCreateEmpireByUserId(user.getId());
 		

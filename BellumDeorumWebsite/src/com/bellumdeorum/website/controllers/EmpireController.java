@@ -37,7 +37,7 @@ public class EmpireController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView empire(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model) {
-		Long userId = SessionUtil.getInstance().getUserId();
+		Long userId = SessionUtil.getInstance().getUserId(request.getRemoteAddr());
 		
 		if (userId == null) {
 			return new ModelAndView("redirect:/", model);
