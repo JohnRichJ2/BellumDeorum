@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import com.bellumdeorum.shared.utilities.Client;
 import com.bellumdeorum.userservice.User;
 
 @Controller
@@ -54,7 +55,8 @@ public class HomeController {
 		User response = new User();
 		try {
 			System.out.println(String.format("http://localhost:8080/userservice/user/%s", mapper.writeValueAsString(user)));
-			response = (User)restTemplate.getForObject("http://localhost:8080/userservice/user/{user}", User.class, mapper.writeValueAsString(user));
+			//response = (User)restTemplate.getForObject("http://localhost:8080/userservice/user/{user}", User.class, mapper.writeValueAsString(user));
+			response = (User)restTemplate.postForObject("http://localhost:8080/userservice/user/{json}", null, User.class, mapper.writeValueAsString(user));
 		} catch (RestClientException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -69,10 +71,19 @@ public class HomeController {
 			e.printStackTrace();
 		}
 		
+		UserServiceClient client = new UserServiceClient();
+		response = client.post(user);
+		
 		System.out.println(response.getName().toString());
 		
 		return "home";
 		
+	}
+	
+	public class UserServiceClient extends Client<User> {
+		public UserServiceClient() {
+			super(User.class, "http://localhost:8080/userservice", "user");
+		}
 	}
 	
 }

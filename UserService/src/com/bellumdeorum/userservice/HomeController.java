@@ -61,10 +61,13 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/user/{json}", method = RequestMethod.GET)
+	@RequestMapping(value = "/user/{json}", method = RequestMethod.POST)
 	@ResponseBody
 	public User hello(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("json") String json) {
+		
+		System.out.println(request);
+		System.out.println(request.getParameterMap());
 		
 		System.out.println(json);
 		System.out.println("made it here!!!");
