@@ -19,7 +19,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import com.bellumdeorum.shared.utilities.AbstractClient;
-import com.bellumdeorum.userservice.User;
+import com.bellumdeorum.userservice.UserDetails;
+import com.bellumdeorum.userservice.clients.GetUserDetailsClient;
+import com.bellumdeorum.userservice.inputs.GetUserDetailsInput;
 
 @Controller
 public class HomeController {
@@ -48,42 +50,14 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		RestTemplate restTemplate = new RestTemplate();
-		User user = new User();
-		user.setName("John");
-		
-		User response = new User();
-		try {
-			System.out.println(String.format("http://localhost:8080/userservice/user/%s", mapper.writeValueAsString(user)));
-			//response = (User)restTemplate.getForObject("http://localhost:8080/userservice/user/{user}", User.class, mapper.writeValueAsString(user));
-			response = (User)restTemplate.postForObject("http://localhost:8080/userservice/user/{json}", null, User.class, mapper.writeValueAsString(user));
-		} catch (RestClientException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		UserServiceClient client = new UserServiceClient();
-		response = client.post(user);
+		GetUserDetailsClient client = new GetUserDetailsClient();
+		GetUserDetailsInput input = new GetUserDetailsInput();
+		input.setId(1L);
+		UserDetails response = client.call(input).getUserDetails();
 		
 		System.out.println(response.getName().toString());
 		
 		return "home";
 		
 	}
-	
-	public class UserServiceClient extends AbstractClient<User> {
-		public UserServiceClient() {
-			super(User.class, "http://localhost:8080/userservice", "user");
-		}
-	}
-	
 }

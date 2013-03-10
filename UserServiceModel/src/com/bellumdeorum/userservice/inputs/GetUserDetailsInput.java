@@ -1,6 +1,6 @@
-package com.bellumdeorum.userservice.requests;
+package com.bellumdeorum.userservice.inputs;
 
-public class GetUserDetailsRequest {
+public class GetUserDetailsInput {
 	private long id;
 
 	public long getId() {

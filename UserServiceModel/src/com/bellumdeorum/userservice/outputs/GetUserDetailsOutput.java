@@ -1,8 +1,8 @@
-package com.bellumdeorum.userservice.responses;
+package com.bellumdeorum.userservice.outputs;
 
 import com.bellumdeorum.userservice.UserDetails;
 
-public class GetUserDetailsResponse {
+public class GetUserDetailsOutput {
 	private UserDetails userDetails;
 
 	public UserDetails getUserDetails() {

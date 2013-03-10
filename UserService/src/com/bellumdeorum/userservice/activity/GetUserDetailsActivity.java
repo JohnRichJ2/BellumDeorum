@@ -13,35 +13,33 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bellumdeorum.shared.utilities.AbstractService;
-import com.bellumdeorum.userservice.User;
+import com.bellumdeorum.userservice.UserDetails;
+import com.bellumdeorum.userservice.inputs.GetUserDetailsInput;
+import com.bellumdeorum.userservice.outputs.GetUserDetailsOutput;
 
 @Controller
-public class GetUserDetailsActivity extends AbstractService<User, User> {
+public class GetUserDetailsActivity extends AbstractService<GetUserDetailsInput, GetUserDetailsOutput> {
 	
 	public GetUserDetailsActivity() {
-		super(User.class);
+		super(GetUserDetailsInput.class);
 	}
 	
 	@RequestMapping(value = "/getuserdetails/{json}", method = RequestMethod.GET)
 	@ResponseBody
-	public User enact(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
+	public GetUserDetailsOutput enact(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("json") String json) {
 		
-		System.out.println(request);
-		System.out.println(request.getParameterMap());
-		
-		System.out.println(json);
-		System.out.println("made it here!!!");
-		
-		User user = requestValue(json);
-		if (user != null) {
-			System.out.println(user.getName());
-			return user;
+		GetUserDetailsInput input = requestValue(json);
+		if (input != null) {
+			System.out.println(input.getId());
 		}
 		
-		user = new User();
+		UserDetails user = new UserDetails();
 		user.setName("JohnYEah");
 		
-		return user;
+		GetUserDetailsOutput output = new GetUserDetailsOutput();
+		output.setUserDetails(user);
+		
+		return output;
 	}
 }
