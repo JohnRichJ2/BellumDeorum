@@ -1,4 +1,4 @@
-package com.bellumdeorum.website.models;
+package com.bellumdeorum.userservice.models;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;

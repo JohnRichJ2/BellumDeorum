@@ -1,6 +1,7 @@
 package com.bellumdeorum.shared.utilities;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public abstract class AbstractService <I, O> {
 	
 	public I requestValue(String json) {
 		try {
-			I value = mapper.readValue(json, requestClass);
+			I value = mapper.readValue(URLDecoder.decode(json, "UTF-8").replace("<DOT>", "."), requestClass);
 			return value;
 		} catch (JsonParseException e) {
 			logger.error("[ERROR]", e);

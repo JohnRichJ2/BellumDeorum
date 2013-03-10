@@ -1,55 +1,32 @@
 package com.bellumdeorum.website.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.bellumdeorum.website.models.User;
-import com.bellumdeorum.website.models.User.UserStatus;
-import com.bellumdeorum.website.repositories.UserRepository;
-import com.bellumdeorum.website.utils.Constants;
+import com.bellumdeorum.userservice.UserDetails;
+import com.bellumdeorum.userservice.clients.GetUserDetailsClient;
+import com.bellumdeorum.userservice.inputs.GetUserDetailsInput;
 
 @Component
 public class UserService {
-	private final UserRepository userRepo;
 	
-	@Autowired
-	public UserService(UserRepository userRepo) {
-		this.userRepo = userRepo;
+	public Object createOrUpdateUser(String name, String email, String password, Object status) {
+		return null;
 	}
-			
-	public User createOrUpdateUser(String name, String email, String password, UserStatus status) {
-		User user = userRepo.getUserByEmail(email);
+	
+	public UserDetails getUser(String email, String password) {
+		GetUserDetailsClient client = new GetUserDetailsClient();
+		GetUserDetailsInput input = new GetUserDetailsInput();
+		input.setEmail(email);
+		input.setPassword(password);
 		
-		if (user == null) {
-			user = new User();
-			user.setEmail(email);
-			user.setStatus(UserStatus.UNREGISTERED);
-			user.setName(name);
-			user.setPassword(password);
-		} else {
-			if (name != null) {
-				user.setName(name);
-			}
-			
-			if (password != null) {
-				user.setPassword(password);
-			}
-			
-			if (status != null) {
-				user.setStatus(status);
-			}
-		}
-
-		user.setVersion(Constants.USER_VERSION);
+		return client.call(input).getUserDetails(); 
+	}
+	
+	public UserDetails getUser(long id) {
+		GetUserDetailsClient client = new GetUserDetailsClient();
+		GetUserDetailsInput input = new GetUserDetailsInput();
+		input.setId(id);
 		
-		return userRepo.save(user);
-	}
-	
-	public User getUser(String email, String password) {
-		return userRepo.getUserByEmailAndPassword(email, password);
-	}
-	
-	public User getUser(long id) {
-		return userRepo.get(id);
+		return client.call(input).getUserDetails(); 
 	}	
 }

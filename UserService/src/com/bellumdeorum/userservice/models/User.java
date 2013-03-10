@@ -1,4 +1,4 @@
-package com.bellumdeorum.website.models;
+package com.bellumdeorum.userservice.models;
 
 import com.bellumdeorum.shared.model.AbstractModel;
 
@@ -64,3 +64,4 @@ public class User implements AbstractModel {
 	}
 	
 }
+

@@ -5,10 +5,17 @@ public class UserDetails {
 		UNREGISTERED, REGISTERED, BANNED
 	}
 	
+	private Long id;
 	private String name;
 	private String email;
 	private UserStatus status;
 	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getName() {
 		return name;
 	}

@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bellumdeorum.website.models.Empire;
-import com.bellumdeorum.website.models.User;
-import com.bellumdeorum.website.services.EmpireService;
+import com.bellumdeorum.userservice.UserDetails;
 import com.bellumdeorum.website.services.UserService;
 import com.bellumdeorum.website.utils.SessionUtil;
 
@@ -23,17 +21,14 @@ import com.bellumdeorum.website.utils.SessionUtil;
 @RequestMapping(value = "/login")
 public class LoginController {
 	private final UserService userService;
-	private final EmpireService empireService;
 	
 	protected LoginController() {
 		this.userService = null;
-		this.empireService = null;
 	}
 	
 	@Autowired
-	public LoginController(UserService userService, EmpireService empireService) {
+	public LoginController(UserService userService) {
 		this.userService = userService;
-		this.empireService = empireService;
 	}	
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -44,7 +39,7 @@ public class LoginController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView login(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@RequestParam("email") String email, @RequestParam("password") String password) {
-		User user = userService.getUser(email, password);
+		UserDetails user = userService.getUser(email, password);
 		
 		if (user == null) {
 			return new ModelAndView("login", model);
@@ -52,8 +47,6 @@ public class LoginController {
 		
 		SessionUtil.getInstance().logUserIn(request.getRemoteAddr(), user);
 		
-		Empire empire = empireService.getOrCreateEmpireByUserId(user.getId());
-		
-		return new ModelAndView("redirect:/empire/" + empire.getId(), model);
+		return new ModelAndView("redirect:/user/", model);
 	}
 }

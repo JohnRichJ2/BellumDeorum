@@ -1,10 +1,12 @@
 package com.bellumdeorum.shared.utilities;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
@@ -20,6 +22,7 @@ public abstract class AbstractClient <T> {
 	public AbstractClient(Class<T> responseClass, String serviceEndpoint, String method) {
 		this.responseClass = responseClass;
 		url = String.format("%s/%s/{json}", serviceEndpoint, method);
+		mapper.setSerializationInclusion(Inclusion.NON_NULL);
 	}
 	
 	public T get(Object request) {
@@ -48,7 +51,7 @@ public abstract class AbstractClient <T> {
 	
 	private String valueAsString(Object value) {
 		try {
-			return mapper.writeValueAsString(value);
+			return URLEncoder.encode(mapper.writeValueAsString(value).replace(".", "<DOT>"), "UTF-8");
 		} catch (JsonGenerationException e) {
 			logger.error("[ERROR]", e);
 		} catch (JsonMappingException e) {

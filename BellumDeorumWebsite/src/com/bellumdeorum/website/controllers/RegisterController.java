@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bellumdeorum.website.models.Registration;
 import com.bellumdeorum.website.services.RegistrationService;
 import com.bellumdeorum.website.utils.SessionUtil;
 
@@ -57,9 +56,10 @@ public class RegisterController {
 	public ModelAndView newRegistration(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String password) {
 		
-		Registration registration = registrationService.createOrUpdateRegistraion(name, email, password);
-		SessionUtil.getInstance().logUserIn(request.getRemoteAddr(), registration.getUser());
+		Object registration = registrationService.createOrUpdateRegistraion(name, email, password);
+		//SessionUtil.getInstance().logUserIn(request.getRemoteAddr(), registration.getUser());
 		
-		return new ModelAndView("redirect:/user?token=" + registration.getToken(), model);
+		//return new ModelAndView("redirect:/user?token=" + registration.getToken(), model);
+		return null;
 	}
 }

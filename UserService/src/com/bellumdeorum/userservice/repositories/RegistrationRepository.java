@@ -1,4 +1,4 @@
-package com.bellumdeorum.website.repositories;
+package com.bellumdeorum.userservice.repositories;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.shared.repository.AbstractRepository;
-import com.bellumdeorum.website.models.Registration;
-import com.bellumdeorum.website.models.Registration.RegistrationStatus;
+import com.bellumdeorum.userservice.models.Registration;
+import com.bellumdeorum.userservice.models.Registration.RegistrationStatus;
 
 @Component
 public class RegistrationRepository extends AbstractRepository<Registration> {

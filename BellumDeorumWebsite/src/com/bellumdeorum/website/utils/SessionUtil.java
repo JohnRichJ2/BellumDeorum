@@ -1,8 +1,7 @@
 package com.bellumdeorum.website.utils;
 
-import com.bellumdeorum.website.models.User;
-
 import com.bellumdeorum.shared.managers.SessionManager;
+import com.bellumdeorum.userservice.UserDetails;
 
 public class SessionUtil {
 	private static SessionUtil instance = new SessionUtil();
@@ -14,7 +13,7 @@ public class SessionUtil {
 		return instance;
 	}
 	
-	public void logUserIn(String ip, User user) {
+	public void logUserIn(String ip, UserDetails user) {
 		session.put(ip, "USER_ID", user.getId());
 	}
 	
