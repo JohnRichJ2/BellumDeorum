@@ -39,34 +39,27 @@ public class GetUserDetailsActivity extends AbstractService<GetUserDetailsInput,
 	@ResponseBody
 	public GetUserDetailsOutput enact(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("json") String json) {
-		
-
-		System.out.println(json);
-		
 		GetUserDetailsInput input = requestValue(json);
+
+		User user = null;
 		
-		if (input.isValid()) {
-			User user = null;
-			
-			if (input.getId() != null) {
-				System.out.println("asdasd");
-				user = service.getUser(input.getId());
-			} else {
-				System.out.println("sadasdasdasd");
-				user = service.getUser(input.getEmail(), input.getPassword());
-			}
-			
-			if (user != null) {
-				GetUserDetailsOutput output = new GetUserDetailsOutput();
-				UserDetails userDetails = new UserDetails();
-				userDetails.setId(user.getId());
-				userDetails.setName(user.getName());
-				userDetails.setEmail(user.getEmail());
-				userDetails.setStatus(UserDetails.UserStatus.valueOf(user.getStatus().toString()));
-				output.setUserDetails(userDetails);
-				
-				return output;
-			}
+		if (input.getId() != null) {
+			user = service.getUser(input.getId());
+		} else {
+			user = service.getUser(input.getEmail(), input.getPassword());
+		}
+		
+		if (user != null) {
+			GetUserDetailsOutput output = new GetUserDetailsOutput();
+			UserDetails userDetails = new UserDetails();
+			userDetails.setId(user.getId());
+			userDetails.setName(user.getName());
+			userDetails.setEmail(user.getEmail());
+			userDetails.setStatus(UserDetails.UserStatus.valueOf(user.getStatus().toString()));
+			output.setUserDetails(userDetails);
+
+			response.setStatus(HttpServletResponse.SC_OK);
+			return output;
 		}
 		
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

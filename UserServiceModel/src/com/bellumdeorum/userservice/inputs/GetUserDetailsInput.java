@@ -1,6 +1,5 @@
 package com.bellumdeorum.userservice.inputs;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -33,16 +32,4 @@ public class GetUserDetailsInput {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
-	@JsonIgnore
-	public boolean isValid() {
-		if (id != null) {
-			return true;
-		} else if ((email != null) && (password != null)) {
-			return true;
-		}
-		
-		return false;
-	}
-
 }
