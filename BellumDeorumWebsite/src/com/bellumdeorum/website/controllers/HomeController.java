@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import com.bellumdeorum.shared.utilities.Client;
+import com.bellumdeorum.shared.utilities.AbstractClient;
 import com.bellumdeorum.userservice.User;
 
 @Controller
@@ -80,7 +80,7 @@ public class HomeController {
 		
 	}
 	
-	public class UserServiceClient extends Client<User> {
+	public class UserServiceClient extends AbstractClient<User> {
 		public UserServiceClient() {
 			super(User.class, "http://localhost:8080/userservice", "user");
 		}

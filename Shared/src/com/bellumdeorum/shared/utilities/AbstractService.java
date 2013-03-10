@@ -15,23 +15,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 
-public abstract class AbstractService <T> {
+public abstract class AbstractService <I, O> {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractService.class);
 	
 	private static final ObjectMapper mapper = new ObjectMapper();
 	
-	private final Class<T> requestClass;
+	private final Class<I> requestClass;
 	
-	public AbstractService(Class<T> requestClass) {
+	public AbstractService(Class<I> requestClass) {
 		this.requestClass = requestClass;
 	}
 	
-	public abstract String enact(HttpServletRequest request, HttpServletResponse response, 
+	public abstract O enact(HttpServletRequest request, HttpServletResponse response, 
 			Locale locale, ModelMap model, @PathVariable("json") String json);
 	
-	public T stringAsValue(String json) {
+	public I requestValue(String json) {
 		try {
-			T value = mapper.readValue(json, requestClass);
+			I value = mapper.readValue(json, requestClass);
 			return value;
 		} catch (JsonParseException e) {
 			logger.error("[ERROR]", e);

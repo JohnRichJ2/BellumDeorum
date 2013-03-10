@@ -22,22 +22,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bellumdeorum.shared.utilities.AbstractService;
+
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class HomeController extends AbstractService<User, User> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	private final ObjectMapper mapper;
 	
 	protected HomeController() {
+		super(User.class);
 		this.mapper = null;
 	}
 	
 	@Autowired
 	public HomeController(ObjectMapper mapper) {
+		super(User.class);
 		this.mapper = mapper;
 	}
 	
@@ -63,7 +67,7 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/user/{json}", method = RequestMethod.POST)
 	@ResponseBody
-	public User hello(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
+	public User enact(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("json") String json) {
 		
 		System.out.println(request);
@@ -72,22 +76,13 @@ public class HomeController {
 		System.out.println(json);
 		System.out.println("made it here!!!");
 		
-		try {
-			User user = mapper.readValue(json, User.class);
+		User user = requestValue(json);
+		if (user != null) {
 			System.out.println(user.getName());
 			return user;
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
-		User user = new User();
+		user = new User();
 		user.setName("JohnYEah");
 		
 		return user;
