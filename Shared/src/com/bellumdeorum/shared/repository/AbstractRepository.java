@@ -100,6 +100,6 @@ public abstract class AbstractRepository <T extends AbstractModel> {
 			return true;
 		}
 		
-		return false;
+		return requiresInitialization(modelList.get(0));
 	}
 }
