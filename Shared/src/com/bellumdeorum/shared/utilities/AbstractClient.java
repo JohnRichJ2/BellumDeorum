@@ -11,42 +11,44 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
-public abstract class AbstractClient <T> {
+public abstract class AbstractClient <I, O> {
 	private static final Logger logger = LoggerFactory.getLogger(AbstractClient.class);
 	
 	private static final ObjectMapper mapper = new ObjectMapper();
 	
-	private final Class<T> responseClass;
+	private final Class<O> outputClass;
 	private final String url;
 	
-	public AbstractClient(Class<T> responseClass, String serviceEndpoint, String method) {
-		this.responseClass = responseClass;
+	public AbstractClient(Class<O> outputClass, String serviceEndpoint, String method) {
+		this.outputClass = outputClass;
 		url = String.format("%s/%s/{json}", serviceEndpoint, method);
 		mapper.setSerializationInclusion(Inclusion.NON_NULL);
 	}
 	
-	public T get(Object request) {
-		T response = null;
+	public abstract O call(I input);
+	
+	protected O get(I input) {
+		O output = null;
 		
-		String json = valueAsString(request);
+		String json = valueAsString(input);
 		if (json != null) {
 			RestTemplate restTemplate = new RestTemplate();
-			response = (T)restTemplate.getForObject(url, responseClass, json);
+			output = (O)restTemplate.getForObject(url, outputClass, json);
 		}
 		
-		return response;
+		return output;
 	}
 	
-	public T post(Object request) {
-		T response = null;
+	protected O post(I input) {
+		O output = null;
 		
-		String json = valueAsString(request);
+		String json = valueAsString(input);
 		if (json != null) {
 			RestTemplate restTemplate = new RestTemplate();
-			response = (T)restTemplate.postForObject(url, null, responseClass, json);
+			output = (O)restTemplate.postForObject(url, null, outputClass, json);
 		}
 		
-		return response;
+		return output;
 	}
 	
 	private String valueAsString(Object value) {

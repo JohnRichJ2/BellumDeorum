@@ -4,12 +4,13 @@ import org.springframework.stereotype.Component;
 
 import com.bellumdeorum.shared.repository.AbstractRepository;
 import com.bellumdeorum.userservice.models.User;
+import com.bellumdeorum.userservice.utils.InitUsers;
 
 @Component
 public class UserRepository extends AbstractRepository<User> {
 		
 	public UserRepository() {
-		super(User.class);
+		super(User.class, InitUsers.USER_LIST);
 	}
 	
 	public User getUserByEmail(String email) {

@@ -5,7 +5,7 @@ import com.bellumdeorum.userservice.UserServiceClient;
 import com.bellumdeorum.userservice.inputs.GetUserDetailsInput;
 import com.bellumdeorum.userservice.outputs.GetUserDetailsOutput;
 
-public class GetUserDetailsClient extends AbstractClient<GetUserDetailsOutput> implements UserServiceClient {
+public class GetUserDetailsClient extends AbstractClient<GetUserDetailsInput, GetUserDetailsOutput> implements UserServiceClient {
 	public GetUserDetailsClient() {
 		super(GetUserDetailsOutput.class, serviceEndpoint, getUserDetails);
 	}

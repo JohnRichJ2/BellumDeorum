@@ -9,7 +9,7 @@ public class RegistrationService {
 		return false;
 	}
 	
-	public Object createOrUpdateRegistraion(String name, String email, String password) {
+	public Object createOrUpdateRegistration(String name, String email, String password) {
 		return null;
 	}
 	

@@ -39,7 +39,9 @@ public class GetUserDetailsActivity extends AbstractService<GetUserDetailsInput,
 	@ResponseBody
 	public GetUserDetailsOutput enact(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@PathVariable("json") String json) {
-		GetUserDetailsInput input = requestValue(json);
+		System.out.println(json);
+		
+		GetUserDetailsInput input = inputValue(json);
 
 		User user = null;
 		

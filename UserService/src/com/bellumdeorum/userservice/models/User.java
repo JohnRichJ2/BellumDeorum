@@ -62,6 +62,5 @@ public class User implements AbstractModel {
 	public void setStatus(UserStatus status) {
 		this.status = status;
 	}
-	
 }
 

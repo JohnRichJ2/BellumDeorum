@@ -21,18 +21,18 @@ public abstract class AbstractService <I, O> {
 	
 	private static final ObjectMapper mapper = new ObjectMapper();
 	
-	private final Class<I> requestClass;
+	private final Class<I> inputClass;
 	
-	public AbstractService(Class<I> requestClass) {
-		this.requestClass = requestClass;
+	public AbstractService(Class<I> inputClass) {
+		this.inputClass = inputClass;
 	}
 	
 	public abstract O enact(HttpServletRequest request, HttpServletResponse response, 
 			Locale locale, ModelMap model, @PathVariable("json") String json);
 	
-	public I requestValue(String json) {
+	public I inputValue(String json) {
 		try {
-			I value = mapper.readValue(URLDecoder.decode(json, "UTF-8").replace("<DOT>", "."), requestClass);
+			I value = mapper.readValue(URLDecoder.decode(json, "UTF-8").replace("<DOT>", "."), inputClass);
 			return value;
 		} catch (JsonParseException e) {
 			logger.error("[ERROR]", e);

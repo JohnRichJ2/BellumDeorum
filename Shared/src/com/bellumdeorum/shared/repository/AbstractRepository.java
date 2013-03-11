@@ -96,7 +96,7 @@ public abstract class AbstractRepository <T extends AbstractModel> {
 			return false;
 		} else if (modelList == null) {
 			return true;
-		} else if (modelList.size() == 0) {
+		} else if (modelList.size() < initModels.size()) {
 			return true;
 		}
 		

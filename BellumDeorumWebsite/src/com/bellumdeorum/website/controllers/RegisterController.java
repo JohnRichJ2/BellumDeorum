@@ -56,7 +56,7 @@ public class RegisterController {
 	public ModelAndView newRegistration(HttpServletRequest request, HttpServletResponse response, Locale locale, ModelMap model,
 			@RequestParam("name") String name, @RequestParam("email") String email, @RequestParam("password") String password) {
 		
-		Object registration = registrationService.createOrUpdateRegistraion(name, email, password);
+		Object registration = registrationService.createOrUpdateRegistration(name, email, password);
 		//SessionUtil.getInstance().logUserIn(request.getRemoteAddr(), registration.getUser());
 		
 		//return new ModelAndView("redirect:/user?token=" + registration.getToken(), model);
